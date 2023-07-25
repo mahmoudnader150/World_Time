@@ -18,18 +18,37 @@ class _LoadingState extends State<Loading> {
 
 
 
-  void getData() async {
-    String str = "https://jsonplaceholder.typicode.com/todos/1";
+  void getTime() async {
+    // String str = "https://jsonplaceholder.typicode.com/todos/1";
+    // final uri = Uri.parse(str);
+    // http.Response response = await get(uri);
+    // Map data = jsonDecode(response.body);
+    // print(data);
+    // print(data['title']);
+
+
+    // make the request
+    String str = "http://worldtimeapi.org/api/timezone/Europe/London";
     final uri = Uri.parse(str);
     http.Response response = await get(uri);
     Map data = jsonDecode(response.body);
-    print(data);
+     print(data);
+    //get properties from data
 
+    var datetime = data['datetime']==null?"NA":data['datetime'];
+    var offset = data['utc_offset']==null?"NA":data['utc_offset'].substring(1,3);
+    // print(datetime);
+     //print(offset);
+
+    // create a date time object
+    DateTime now  =DateTime.parse(datetime);
+    now = now.add(Duration(hours: int.parse(offset)));
+    print(now);
   }
   @override
   void initState() {
     super.initState();
-    getData();
+    getTime();
   }
   @override
   Widget build(BuildContext context) {
