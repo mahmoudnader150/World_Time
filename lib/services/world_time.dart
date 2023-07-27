@@ -27,27 +27,32 @@ class WorldTime{
     // print(data);
     // print(data['title']);
 
+    try {
+      // make the request
+      String str = "http://worldtimeapi.org/api/timezone/$url";
+      final uri = Uri.parse(str);
+      http.Response response = await get(uri);
+      Map data = jsonDecode(response.body);
+      print(data);
+      //get properties from data
 
-    // make the request
-    String str = "http://worldtimeapi.org/api/timezone/$url";
-    final uri = Uri.parse(str);
-    http.Response response = await get(uri);
-    Map data = jsonDecode(response.body);
-    print(data);
-    //get properties from data
+      var datetime = data['datetime']==null?"NA":data['datetime'];
+      var offset = data['utc_offset']==null?"NA":data['utc_offset'].substring(1,3);
+      // print(datetime);
+      //print(offset);
 
-    var datetime = data['datetime']==null?"NA":data['datetime'];
-    var offset = data['utc_offset']==null?"NA":data['utc_offset'].substring(1,3);
-    // print(datetime);
-    //print(offset);
+      // create a date time object
+      DateTime now  =DateTime.parse(datetime);
+      now = now.add(Duration(hours: int.parse(offset)));
+      print(now);
 
-    // create a date time object
-    DateTime now  =DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(offset)));
-    print(now);
+      //set time property
+      time = now.toString();
+    }catch(e){
+       print('caught error: $e');
+       time = "could not get time data";
+    }
 
-    //set time property
-    time = now.toString();
 
   }
 }
