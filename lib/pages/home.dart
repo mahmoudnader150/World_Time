@@ -8,8 +8,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+
+  late Object data ;
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)!.settings.arguments;
+
+    print(args);
+
     return Scaffold(
       body: SafeArea(child: Column(
         children: [
