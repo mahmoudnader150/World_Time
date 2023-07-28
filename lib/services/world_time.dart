@@ -9,7 +9,7 @@ class WorldTime{
   String time = "NA"; // time in that location
   String flag = "NA"; //url to an asset flag icon
   String url ="NA";
-
+  bool isDayTime = false;
 
 
 
@@ -48,6 +48,7 @@ class WorldTime{
 
 
       //set time property
+      isDayTime = (now.hour >6 && now.hour<20)?true:false;
       time = DateFormat.jm().format(now);
     }catch(e){
        print('caught error: $e');

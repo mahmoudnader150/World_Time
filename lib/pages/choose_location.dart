@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:world_time/services/world_time.dart';
 
 
 class ChooseLocation extends StatefulWidget {
@@ -11,7 +11,16 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
 
-
+  List<WorldTime> locations = [
+    WorldTime('London','uk.png','Europe/London'),
+    WorldTime('Athens','greece.png','Europe/Athens'),
+    WorldTime('Cairo','egypt.png','Africa/Cairo'),
+    WorldTime('Nairobi','kenya.png','Africa/Nairobi'),
+    WorldTime('Chicago','usa.png','America/Chicago'),
+    WorldTime('New York','usa.png','America/New_York'),
+    WorldTime('Seoul','south_korea.png','Asia/Seoul'),
+    WorldTime('Jakarta','indonesia.png', 'Asia/Jakarta'),
+  ];
   @override
   Widget build(BuildContext context) {
 
@@ -23,7 +32,26 @@ class _ChooseLocationState extends State<ChooseLocation> {
         centerTitle: true,
         elevation: 0,
       ),
+      body: ListView.builder(
+         itemCount: locations.length,
+         itemBuilder: (context,index){
+           return Padding(
+             padding: const EdgeInsets.symmetric(vertical: 1.0,horizontal: 4.0),
+             child: Card(
+               child: ListTile(
+                 onTap: (){
+                   print(locations[index].location);
+                 },
+                 title: Text(locations[index].location as String),
+                 leading: CircleAvatar(
+                   backgroundImage: AssetImage('assets/${locations[index].flag}'),
+                 ),
+               ),
 
+             ),
+           );
+         },
+      ),
     );
   }
 }
